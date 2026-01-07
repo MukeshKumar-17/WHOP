@@ -95,9 +95,11 @@ The application now includes rich mock data and access control logic:
 The frontend is configured to communicate with a backend API using Axios.
 
 ### Configuration
-1.  Set the API base URL in `.env`:
+1.  Set the API base URL in `.env`.
+2.  **Mock Mode**: To test without a backend, set `VITE_USE_MOCK=true`.
     ```
     VITE_API_BASE_URL=http://localhost:5000/api
+    VITE_USE_MOCK=true 
     ```
 
 ### Authentication
