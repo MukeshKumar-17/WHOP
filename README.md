@@ -66,6 +66,16 @@ The application uses a simulated authentication system with role-based access co
 - **Protected Routes**: Redirects unauthenticated users to `/login`.
 - **Navbar**: Dynamically updates based on login state.
 - **Dashboard**: Renders different views for Users vs Creators.
+- **Product Listing**: 
+  - Publicly accessible marketplace.
+  - Mock data simulates various product types (One-time vs Subscription).
+  - Responsive grid layout with reusable `ProductCard` components.
+
+## Mock Data
+The application now includes rich mock data for products:
+- **Subscriptions**: Billed monthly (e.g., Trading Signals).
+- **One-Time**: Single purchase (e.g., Courses).
+- **Creators**: Different creators associated with products.
 
 ## Backend Integration
 

@@ -75,15 +75,54 @@ export const register = async (name, email, password, role = 'user') => {
     });
 };
 
+const MOCK_PRODUCTS = [
+    {
+        id: 1,
+        title: 'Premium Trading Signals',
+        description: 'Get daily crypto and stock trading signals from top analysts.',
+        price: 49.99,
+        type: 'subscription',
+        creatorName: 'TradePro'
+    },
+    {
+        id: 2,
+        title: 'Fitness Masterclass',
+        description: 'Complete 12-week body transformation program with meal plans.',
+        price: 199.00,
+        type: 'one-time',
+        creatorName: 'FitLife Academy'
+    },
+    {
+        id: 3,
+        title: 'Digital Art Pack',
+        description: 'Over 500+ high resolution textures and brushes for Procreate.',
+        price: 25.00,
+        type: 'one-time',
+        creatorName: 'CreativeStudio'
+    },
+    {
+        id: 4,
+        title: 'SaaS Founder Community',
+        description: 'Join exclusive community of 100+ booted founders.',
+        price: 99.00,
+        type: 'subscription',
+        creatorName: 'SaaS Hub'
+    },
+    {
+        id: 5,
+        title: 'Ultimate Python Course',
+        description: 'Zero to Hero in Python with 50+ hours of video content.',
+        price: 14.99,
+        type: 'one-time',
+        creatorName: 'CodeWithMe'
+    }
+];
+
 export const fetchProducts = async () => {
     return new Promise((resolve) => {
         setTimeout(() => {
             resolve({
-                data: [
-                    { id: 1, name: 'Premium Pass', price: 29.99, description: 'Access to premium features' },
-                    { id: 2, name: 'Creator Bundle', price: 49.99, description: 'Tools for creators' },
-                    { id: 3, name: 'Basic Access', price: 9.99, description: 'Standard entry level' },
-                ],
+                data: MOCK_PRODUCTS,
             });
         }, 800);
     });
