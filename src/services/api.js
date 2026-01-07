@@ -19,196 +19,57 @@ api.interceptors.request.use(
     (error) => Promise.reject(error)
 );
 
-// Mock Services
+// Response interceptor for handling 401
+api.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+            // Auto-logout if token is invalid or expired
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = '/login';
+        }
+        return Promise.reject(error);
+    }
+);
+
+// Auth Services
 export const login = async (email, password) => {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            // Mock validation
-            if (!email || !password) {
-                reject({ response: { data: { message: 'Email and password are required' } } });
-                return;
-            }
-
-            // Mock successful login
-            const isCreator = email.includes('creator');
-            const role = isCreator ? 'creator' : 'user';
-
-            if (password.length >= 6) {
-                resolve({
-                    data: {
-                        token: `mock-jwt-token-${Date.now()}`,
-                        user: {
-                            id: isCreator ? 99 : 1, // User ID 1 is the 'customer'
-                            name: isCreator ? 'Creator User' : 'Test User',
-                            email,
-                            role,
-                        },
-                    },
-                });
-            } else {
-                reject({ response: { data: { message: 'Invalid credentials' } } });
-            }
-        }, 1000);
-    });
+    return api.post('/auth/login', { email, password });
 };
 
 export const register = async (name, email, password, role = 'user') => {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            if (!email || !password || !name) {
-                reject({ response: { data: { message: 'All fields are required' } } });
-                return;
-            }
-
-            resolve({
-                data: {
-                    token: `mock-jwt-token-${Date.now()}`,
-                    user: {
-                        id: Math.floor(Math.random() * 1000),
-                        name,
-                        email,
-                        role,
-                    },
-                },
-            });
-        }, 1000);
-    });
+    return api.post('/auth/register', { name, email, password, role });
 };
 
-const MOCK_PRODUCTS = [
-    {
-        id: 1,
-        title: 'Premium Trading Signals',
-        description: 'Get daily crypto and stock trading signals from top analysts. Includes access to our private Discord community and weekly webinars.',
-        price: 49.99,
-        type: 'subscription',
-        creatorName: 'TradePro'
-    },
-    {
-        id: 2,
-        title: 'Fitness Masterclass',
-        description: 'Complete 12-week body transformation program with meal plans, workout videos, and progress tracking tools.',
-        price: 199.00,
-        type: 'one-time',
-        creatorName: 'FitLife Academy'
-    },
-    {
-        id: 3,
-        title: 'Digital Art Pack',
-        description: 'Over 500+ high resolution textures and brushes for Procreate. Perfect for illustrators and designers.',
-        price: 25.00,
-        type: 'one-time',
-        creatorName: 'CreativeStudio'
-    },
-    {
-        id: 4,
-        title: 'SaaS Founder Community',
-        description: 'Join exclusive community of 100+ booted founders. Share insights, get feedback, and network.',
-        price: 99.00,
-        type: 'subscription',
-        creatorName: 'SaaS Hub'
-    },
-    {
-        id: 5,
-        title: 'Ultimate Python Course',
-        description: 'Zero to Hero in Python with 50+ hours of video content. Includes assignments, quizzes, and certificates.',
-        price: 14.99,
-        type: 'one-time',
-        creatorName: 'CodeWithMe'
-    }
-];
-
-// Mock Access Database
-// Typically this would be checked on backend
-const MOCK_ACCESS_DB = {
-    // userId: [productIds]
-    1: [1, 3], // Test User has access to 'Premium Trading Signals' and 'Digital Art Pack'
-};
-
+// Product Services
 export const fetchProducts = async () => {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve({
-                data: MOCK_PRODUCTS
-            });
-        }, 800);
-    });
+    return api.get('/products');
 };
 
 export const fetchProductById = async (id) => {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            const product = MOCK_PRODUCTS.find(p => p.id === parseInt(id));
-            if (product) {
-                resolve({ data: product });
-            } else {
-                reject(new Error("Product not found"));
-            }
-        }, 600);
-    });
+    return api.get(`/products/${id}`);
 };
 
 export const checkAccess = async (productId) => {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            const userStr = localStorage.getItem('user');
-            if (!userStr) {
-                resolve(false);
-                return;
-            }
-            const user = JSON.parse(userStr);
-            const userAccess = MOCK_ACCESS_DB[user.id] || [];
-            resolve(userAccess.includes(parseInt(productId)));
-        }, 400);
-    });
+    try {
+        const response = await api.get(`/access/${productId}`);
+        return response.data.hasAccess;
+    } catch (error) {
+        return false;
+    }
 };
 
 export const createProduct = async (productData) => {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            console.log("Mock Create Product Data:", productData);
-
-            // Basic mock validation
-            if (!productData.title || !productData.price || productData.price <= 0) {
-                reject(new Error("Invalid product data"));
-                return;
-            }
-
-            resolve({
-                data: {
-                    success: true,
-                    message: "Product created successfully",
-                    product: {
-                        id: Math.floor(Math.random() * 10000),
-                        ...productData
-                    }
-                }
-            });
-        }, 1500);
-    });
+    return api.post('/products', productData);
 };
 
 export const fetchCreatorProducts = async () => {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            // Mock: Returns all products for any creator login for demo purposes
-            // In real app, filter by user.id
-            resolve({
-                data: MOCK_PRODUCTS
-            });
-        }, 800);
-    });
+    return api.get('/creator/products');
 };
 
 export const deleteProduct = async (productId) => {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            console.log(`Mock Deleting Product ID: ${productId}`);
-            resolve({
-                data: { success: true, message: "Product deleted" }
-            });
-        }, 1000);
-    });
+    return api.delete(`/products/${productId}`);
 };
 
 export default api;

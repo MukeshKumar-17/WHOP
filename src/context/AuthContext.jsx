@@ -19,6 +19,7 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const login = (userData, tokenData) => {
+        // Backend now returns full user object and token directly
         setUser(userData);
         setToken(tokenData);
         localStorage.setItem('user', JSON.stringify(userData));

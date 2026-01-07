@@ -28,8 +28,11 @@ const Login = () => {
         setLoading(true);
         try {
             const response = await loginService(email, password);
-            login(response.data.user, response.data.token);
-            navigate('/dashboard');
+            // Axios response structure: { data: { token, user } }
+            const { token, user } = response.data;
+
+            login(user, token);
+            navigate(user.role === 'creator' ? '/dashboard' : '/products');
         } catch (err) {
             setError(err.response?.data?.message || 'Login failed');
         } finally {

@@ -30,7 +30,10 @@ const Register = () => {
         setLoading(true);
         try {
             const response = await registerService(name, email, password, role);
-            login(response.data.user, response.data.token);
+            // Axios response structure: { data: { token, user } }
+            const { token, user } = response.data;
+
+            login(user, token);
             navigate('/dashboard');
         } catch (err) {
             console.error(err);
