@@ -70,12 +70,19 @@ The application uses a simulated authentication system with role-based access co
   - Publicly accessible marketplace.
   - Mock data simulates various product types (One-time vs Subscription).
   - Responsive grid layout with reusable `ProductCard` components.
+- **Product Details**: 
+  - Dynamic route `/products/:id`.
+  - Simulates logic for "Buy Now" vs "Access Granted".
+  - Mock API checks purchase status based on user ID.
 
-## Mock Data
-The application now includes rich mock data for products:
+## Mock Data & Access
+The application now includes rich mock data and access control logic:
 - **Subscriptions**: Billed monthly (e.g., Trading Signals).
 - **One-Time**: Single purchase (e.g., Courses).
 - **Creators**: Different creators associated with products.
+- **Access Control**:
+  - `user@test.com` (ID: 1) has access to **Product ID 1** and **Product ID 3**.
+  - All other users see "Buy Now" for all products.
 
 ## Backend Integration
 

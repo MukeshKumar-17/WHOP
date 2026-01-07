@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const ProductCard = ({ product }) => {
     const isSubscription = product.type === 'subscription';
@@ -26,7 +27,7 @@ const ProductCard = ({ product }) => {
                     ${product.price.toFixed(2)}
                     {isSubscription && <span className="period">/mo</span>}
                 </div>
-                <button className="btn btn-block">View Details</button>
+                <Link to={`/products/${product.id}`} className="btn btn-block">View Details</Link>
             </div>
         </div>
     );

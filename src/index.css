@@ -149,6 +149,28 @@ h3 {
   /* Fix width issues */
 }
 
+/* Product Details Page */
+.product-details-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+@media (min-width: 768px) {
+  .product-details-layout {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .details-header {
+    flex: 1;
+  }
+
+  .details-content {
+    flex: 2;
+  }
+}
+
 /* Product Grid & Cards */
 .products-grid {
   display: grid;
