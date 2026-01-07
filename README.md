@@ -78,6 +78,9 @@ The application uses a simulated authentication system with role-based access co
   - **Create Product**: Mock form to create new products (`/creator/create-product`).
   - Restricted to users with `role: creator`.
   - Validates input and simulates success with auto-redirect to Dashboard.
+  - **My Products**: Management dashboard (`/creator/my-products`).
+  - Lists valid products with status.
+  - Supports mock deletion with confirmation dialog.
 
 ## Mock Data & Access
 The application now includes rich mock data and access control logic:

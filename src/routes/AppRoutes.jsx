@@ -9,6 +9,7 @@ import ProductDetails from '../pages/ProductDetails';
 import Dashboard from '../pages/Dashboard';
 
 import CreateProduct from '../pages/CreateProduct';
+import MyProducts from '../pages/MyProducts';
 
 const AppRoutes = () => {
     return (

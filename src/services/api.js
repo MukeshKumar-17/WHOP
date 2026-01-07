@@ -188,4 +188,27 @@ export const createProduct = async (productData) => {
     });
 };
 
+export const fetchCreatorProducts = async () => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            // Mock: Returns all products for any creator login for demo purposes
+            // In real app, filter by user.id
+            resolve({
+                data: MOCK_PRODUCTS
+            });
+        }, 800);
+    });
+};
+
+export const deleteProduct = async (productId) => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            console.log(`Mock Deleting Product ID: ${productId}`);
+            resolve({
+                data: { success: true, message: "Product deleted" }
+            });
+        }, 1000);
+    });
+};
+
 export default api;

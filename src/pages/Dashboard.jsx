@@ -25,7 +25,7 @@ const Dashboard = () => {
                             <h3>Active Products</h3>
                             <p style={{ fontSize: '2rem', fontWeight: 'bold', margin: '10px 0' }}>5</p>
                             <div style={{ display: 'flex', gap: '10px' }}>
-                                <Link to="/products" className="btn" style={{ fontSize: '0.9rem', flex: 1, textAlign: 'center' }}>Manage</Link>
+                                <Link to="/creator/my-products" className="btn" style={{ fontSize: '0.9rem', flex: 1, textAlign: 'center' }}>Manage</Link>
                                 <Link to="/creator/create-product" className="btn" style={{ fontSize: '0.9rem', background: '#2ecc71', flex: 1, textAlign: 'center' }}>+ New Product</Link>
                             </div>
                         </div>
