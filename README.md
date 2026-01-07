@@ -47,19 +47,32 @@ src/
     ```
     The application will start at `http://localhost:5173`.
 
-## Features (Mocked)
+## Authentication Features
+The application uses a simulated authentication system with role-based access control.
 
-- **Authentication**:
-    - Login: `test@example.com` / `password`
-    - Register: Simulates user registration.
-- **Products**: Displays a list of mock products.
-- **Dashboard**: Protected route example.
+### Demo Credentials
+- **User (Customer)**:
+  - Email: `user@test.com`
+  - Password: `password` (or any string > 6 chars)
+  - Role: `user` (Access to basic dashboard and marketplace)
+
+- **Creator (Seller)**:
+  - Email: `creator@test.com` (Must contain 'creator')
+  - Password: `password`
+  - Role: `creator` (Access to sales overview and product management)
+
+### Key Components
+- **AuthContext**: Manages user state and persists sessions via `localStorage`.
+- **Protected Routes**: Redirects unauthenticated users to `/login`.
+- **Navbar**: Dynamically updates based on login state.
+- **Dashboard**: Renders different views for Users vs Creators.
 
 ## Backend Integration
 
 This frontend is designed to be connected to a backend. To integrate:
 1.  Update `VITE_API_BASE_URL` in `.env`.
 2.  Replace mock functions in `src/services/api.js` with actual API calls.
+3.  Ensure the backend returns a user object with a `role` property (`user` or `creator`).
 
 ## License
 

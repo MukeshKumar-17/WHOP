@@ -21,17 +21,27 @@ api.interceptors.request.use(
 
 // Mock Services
 export const login = async (email, password) => {
-    // Simulate API call
     return new Promise((resolve, reject) => {
         setTimeout(() => {
-            if (email === 'test@example.com' && password === 'password') {
+            // Mock validation
+            if (!email || !password) {
+                reject({ response: { data: { message: 'Email and password are required' } } });
+                return;
+            }
+
+            // Mock successful login
+            const isCreator = email.includes('creator');
+            const role = isCreator ? 'creator' : 'user';
+
+            if (password.length >= 6) {
                 resolve({
                     data: {
-                        token: 'mock-jwt-token-123',
+                        token: `mock-jwt-token-${Date.now()}`,
                         user: {
-                            id: 1,
-                            name: 'Test User',
-                            email: 'test@example.com',
+                            id: isCreator ? 99 : 1,
+                            name: isCreator ? 'Creator User' : 'Test User',
+                            email,
+                            role,
                         },
                     },
                 });
@@ -42,16 +52,22 @@ export const login = async (email, password) => {
     });
 };
 
-export const register = async (name, email, password) => {
-    return new Promise((resolve) => {
+export const register = async (name, email, password, role = 'user') => {
+    return new Promise((resolve, reject) => {
         setTimeout(() => {
+            if (!email || !password || !name) {
+                reject({ response: { data: { message: 'All fields are required' } } });
+                return;
+            }
+
             resolve({
                 data: {
-                    token: 'mock-jwt-token-456',
+                    token: `mock-jwt-token-${Date.now()}`,
                     user: {
-                        id: 2,
+                        id: Math.floor(Math.random() * 1000),
                         name,
                         email,
+                        role,
                     },
                 },
             });
