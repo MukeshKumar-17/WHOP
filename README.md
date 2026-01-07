@@ -74,6 +74,10 @@ The application uses a simulated authentication system with role-based access co
   - Dynamic route `/products/:id`.
   - Simulates logic for "Buy Now" vs "Access Granted".
   - Mock API checks purchase status based on user ID.
+- **Creator Tools**:
+  - **Create Product**: Mock form to create new products (`/creator/create-product`).
+  - Restricted to users with `role: creator`.
+  - Validates input and simulates success with auto-redirect to Dashboard.
 
 ## Mock Data & Access
 The application now includes rich mock data and access control logic:

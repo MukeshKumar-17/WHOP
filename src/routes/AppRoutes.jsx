@@ -8,6 +8,8 @@ import Products from '../pages/Products';
 import ProductDetails from '../pages/ProductDetails';
 import Dashboard from '../pages/Dashboard';
 
+import CreateProduct from '../pages/CreateProduct';
+
 const AppRoutes = () => {
     return (
         <Routes>
@@ -16,11 +18,21 @@ const AppRoutes = () => {
             <Route path="/register" element={<Register />} />
             <Route path="/products" element={<Products />} />
             <Route path="/products/:id" element={<ProductDetails />} />
+
+            {/* Protected Routes */}
             <Route
                 path="/dashboard"
                 element={
                     <ProtectedRoute>
                         <Dashboard />
+                    </ProtectedRoute>
+                }
+            />
+            <Route
+                path="/creator/create-product"
+                element={
+                    <ProtectedRoute>
+                        <CreateProduct />
                     </ProtectedRoute>
                 }
             />

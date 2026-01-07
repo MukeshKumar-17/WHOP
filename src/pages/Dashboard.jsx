@@ -24,7 +24,10 @@ const Dashboard = () => {
                         <div className="card-placeholder" style={{ background: '#f8f9fa', padding: '20px', borderRadius: '8px' }}>
                             <h3>Active Products</h3>
                             <p style={{ fontSize: '2rem', fontWeight: 'bold', margin: '10px 0' }}>5</p>
-                            <Link to="/products" className="btn" style={{ fontSize: '0.9rem' }}>Manage Products</Link>
+                            <div style={{ display: 'flex', gap: '10px' }}>
+                                <Link to="/products" className="btn" style={{ fontSize: '0.9rem', flex: 1, textAlign: 'center' }}>Manage</Link>
+                                <Link to="/creator/create-product" className="btn" style={{ fontSize: '0.9rem', background: '#2ecc71', flex: 1, textAlign: 'center' }}>+ New Product</Link>
+                            </div>
                         </div>
                     </>
                 ) : (

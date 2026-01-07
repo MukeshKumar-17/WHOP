@@ -163,4 +163,29 @@ export const checkAccess = async (productId) => {
     });
 };
 
+export const createProduct = async (productData) => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            console.log("Mock Create Product Data:", productData);
+
+            // Basic mock validation
+            if (!productData.title || !productData.price || productData.price <= 0) {
+                reject(new Error("Invalid product data"));
+                return;
+            }
+
+            resolve({
+                data: {
+                    success: true,
+                    message: "Product created successfully",
+                    product: {
+                        id: Math.floor(Math.random() * 10000),
+                        ...productData
+                    }
+                }
+            });
+        }, 1500);
+    });
+};
+
 export default api;
