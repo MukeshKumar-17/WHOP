@@ -92,11 +92,38 @@ The application now includes rich mock data and access control logic:
   - All other users see "Buy Now" for all products.
 
 ## Backend Integration
+The frontend is configured to communicate with a backend API using Axios.
 
-This frontend is designed to be connected to a backend. To integrate:
-1.  Update `VITE_API_BASE_URL` in `.env`.
-2.  Replace mock functions in `src/services/api.js` with actual API calls.
-3.  Ensure the backend returns a user object with a `role` property (`user` or `creator`).
+### Configuration
+1.  Set the API base URL in `.env`:
+    ```
+    VITE_API_BASE_URL=http://localhost:5000/api
+    ```
+
+### Authentication
+- **Login/Register**: Uses `/auth/login` and `/auth/register`.
+- **Token Management**: JWT stored in `localStorage` and attached to headers via Axios interceptor.
+- **Auto-Logout**: 401/403 responses trigger automatic logout and redirect to login.
+
+### Payment Flow
+1.  **Initiation**: "Buy Now" triggers `POST /payments/create-checkout-session` with `productId`.
+2.  **Redirect**: Backend returns Stripe Checkout URL -> User is redirected.
+3.  **Completion**:
+    - **Success**: Redirects to `/payment/success`. Access is granted.
+    - **Cancel**: Redirects to `/payment/cancel`.
+4.  **Verification**: Access is re-checked via `GET /access/:productId` upon return.
+
+### API Endpoints
+expected by frontend:
+- `POST /auth/login`
+- `POST /auth/register`
+- `GET /products`
+- `GET /products/:id`
+- `POST /products` (Creator only)
+- `GET /creator/products` (Creator only)
+- `DELETE /products/:id` (Creator only)
+- `GET /access/:productId` (Check access)
+- `POST /payments/create-checkout-session` (Stripe)
 
 ## License
 

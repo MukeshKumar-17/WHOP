@@ -10,6 +10,8 @@ import Dashboard from '../pages/Dashboard';
 
 import CreateProduct from '../pages/CreateProduct';
 import MyProducts from '../pages/MyProducts';
+import PaymentSuccess from '../pages/PaymentSuccess';
+import PaymentCancel from '../pages/PaymentCancel';
 
 const AppRoutes = () => {
     return (

@@ -72,4 +72,9 @@ export const deleteProduct = async (productId) => {
     return api.delete(`/products/${productId}`);
 };
 
+// Payment Services
+export const createCheckoutSession = async (productId) => {
+    return api.post('/payments/create-checkout-session', { productId });
+};
+
 export default api;
